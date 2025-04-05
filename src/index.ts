@@ -3,7 +3,9 @@ import express from 'express';
 import http from 'http';
 import { Server, Socket } from 'socket.io';
 import redisClient from './configDB.ts';
-import constants from './constants.ts';
+
+const MAX_USERS_PER_ROOM: number = Number(process.env.MAX_USERS_PER_ROOM!);
+const MAX_MESSAGES_PER_ROOM: number = Number(process.env.MAX_MESSAGES_PER_ROOM!);
 
 const app = express();
 const server = http.createServer(app);
@@ -18,7 +20,7 @@ async function joinRoom(socket: Socket) {
     const rooms = await redisClient.zrangebyscore(
       'active_rooms',
       '-inf',
-      constants.MAX_USERS_PER_ROOM - 1,
+      MAX_USERS_PER_ROOM - 1,
       'LIMIT',
       0,
       1,
@@ -49,7 +51,7 @@ async function joinRoom(socket: Socket) {
       '+',
       '-',
       'COUNT',
-      constants.MAX_MESSAGES_PER_ROOM,
+      MAX_MESSAGES_PER_ROOM,
     );
 
     const onlineCount = await redisClient.scard(`${selectedRoom}:users`);
@@ -79,10 +81,10 @@ async function joinRoom(socket: Socket) {
     // Sort messages chronologically and send them to the client
     formattedMessages.sort((a, b) => a.timestamp - b.timestamp);
     console.log(
-      `Emitting online count: ${onlineCount}/${constants.MAX_USERS_PER_ROOM} in room ${selectedRoom}`,
+      `Emitting online count: ${onlineCount}/${MAX_USERS_PER_ROOM} in room ${selectedRoom}`,
     );
     socket.emit('previousMessages', formattedMessages, selectedRoom);
-    io.to(selectedRoom).emit('onlineCount', onlineCount, constants.MAX_USERS_PER_ROOM);
+    io.to(selectedRoom).emit('onlineCount', onlineCount, MAX_USERS_PER_ROOM);
   } catch (error) {
     console.error('Error in joinRoom:', error);
   }
