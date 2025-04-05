@@ -7,7 +7,7 @@ import constants from './constants.js';
 
 const app = express();
 const server = http.createServer(app);
-const io = new Server(server, { cors: { origin: '*' } });
+const io = new Server(server, { cors: { origin: process.env.URL_ORIGIN } });
 
 /**
  * Joins the socket to a room, updates online status, and sends previous messages.
