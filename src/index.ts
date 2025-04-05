@@ -239,6 +239,7 @@ async function cleanupRoom(socket: Socket) {
     await redisClient.srem(`${room}:users`, socket.id);
     await redisClient.del(`user:${socket.id}:room`);
     await redisClient.del(`user:${socket.id}:ip`);
+    await redisClient.del(`user:${socket.id}:username`);
     await redisClient.hset(`${room}:userStatus`, username, 'offline');
     const onlineCount = await redisClient.scard(`${room}:users`);
     io.to(room).emit('userStatusChange', { username, online: false }, onlineCount);
