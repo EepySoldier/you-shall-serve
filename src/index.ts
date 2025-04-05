@@ -2,8 +2,8 @@ import 'dotenv/config';
 import express from 'express';
 import http from 'http';
 import { Server, Socket } from 'socket.io';
-import redisClient from './configDB.ts';
-import constants from './constants.ts';
+import redisClient from './configDB';
+import constants from './constants';
 
 const app = express();
 const server = http.createServer(app);
