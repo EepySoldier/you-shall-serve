@@ -1,27 +1,8 @@
 {
+  "extends": ["@tsconfig/node-ts/tsconfig.json", "@tsconfig/node-lts/tsconfig.json"],
   "compilerOptions": {
-    "lib": ["esnext"],
-    "target": "ESNext",
-    "module": "ESNext",
-    "moduleDetection": "force",
-    "jsx": "react-jsx",
-    "allowJs": true,
     "outDir": "./dist",
-    "rootDir": "./src",
-
-    "moduleResolution": "bundler",
-    "verbatimModuleSyntax": true,
-    "noEmit": false,
-    "allowImportingTsExtensions": false,
-
-    "strict": true,
-    "skipLibCheck": true,
-    "noFallthroughCasesInSwitch": true,
-    "noUncheckedIndexedAccess": true,
-
-    "noUnusedLocals": false,
-    "noUnusedParameters": false,
-    "noPropertyAccessFromIndexSignature": false
+    "rootDir": "./src"
   },
   "include": ["src/**/*.ts"],
   "exclude": ["node_modules"]
