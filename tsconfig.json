@@ -12,6 +12,7 @@
     "moduleResolution": "bundler",
     "verbatimModuleSyntax": true,
     "noEmit": false,
+    "allowImportingTsExtensions": false,
 
     "strict": true,
     "skipLibCheck": true,
